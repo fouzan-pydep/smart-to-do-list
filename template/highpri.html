@@ -1,0 +1,69 @@
+{% load static %}
+{% load widget_tweaks %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>High Priority Task</title>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <style>
+        body {
+            background-color: #fff3e0;
+            padding-top: 80px; /* Space for navbar */
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+        }
+
+        .task-box {
+            background-color: #ffffff;
+            padding: 2rem 2.5rem;
+            border-radius: 1rem;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 500px;
+        }
+
+        h2 {
+            text-align: center;
+            color: #e53935;
+            margin-bottom: 1.5rem;
+        }
+
+        .btn-save {
+            width: 100%;
+            background-color: #e53935;
+            color: white;
+            font-weight: bold;
+        }
+
+        .btn-save:hover {
+            background-color: #d32f2f;
+        }
+    </style>
+</head>
+<body>
+   
+   
+    <div class="task-box">
+        <h2>🔥 High Priority Task Manager</h2>
+        <form method="post" novalidate>
+            {% csrf_token %}
+            {% for field in form %}
+                <div class="mb-3">
+                    <label class="form-label">{{ field.label }}</label>
+                    {% render_field field class="form-control" %}
+                    {% if field.errors %}
+                        <div class="text-danger small">{{ field.errors|striptags }}</div>
+                    {% endif %}
+                </div>
+            {% endfor %}
+            <button type="submit" class="btn btn-save">Save Task</button>
+        </form>
+    </div>
+
+    <!-- Bootstrap JS (for navbar toggle on small screens) -->
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+</body>
+</html>

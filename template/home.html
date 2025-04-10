@@ -1,0 +1,101 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'css\bootstrap.min.css' %}">
+
+
+
+{% block style %}
+<style>
+    body {
+        margin: 0;
+        font-family: 'Segoe UI', sans-serif;
+        background-color: #f0f8ff;
+    }
+
+    #cont {
+        height: 100vh;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 20px;
+        flex-wrap: wrap;
+    }
+
+    .rio {
+        height: 120px;
+        width: 250px;
+        border: 2px solid #000;
+        border-radius: 10px;
+        background-color: #ffffff;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        transition: all 0.3s ease;
+    }
+
+    .rio a {
+        text-decoration: none;
+        color: #333;
+        font-size: 18px;
+        font-weight: bold;
+    }
+
+    .rio:hover {
+        background-color: #e3f2fd;
+        transform: scale(1.05);
+        border-color: #007bff;
+    }
+</style>
+{% endblock %}
+{% block nav %}
+<nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="{% url 'home' %}">Smart To-Do</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+  
+      <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+        <ul class="navbar-nav">
+          {% if user.is_authenticated %}
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'high' %}">create task </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+            </li>
+          {% else %}
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'login' %}">Login</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'register' %}">Register</a>
+            </li>
+          {% endif %}
+        </ul>
+      </div>
+    </div>
+  </nav>
+  
+{% endblock %}
+
+{% block body %}
+<div id="cont">
+    <div class="rio" id="lil1">
+        <a href="{% url 'high' %}">Create High Priority Task 🔥</a>
+    </div>
+    <div class="rio" id="lil2">
+        <a href="{% url 'medium' %}">Create Medium Priority Task 📌</a>
+    </div>
+    <div class="rio" id="lil3">
+        <a href="{% url 'low' %}">Create Low Priority Task 🌱</a>
+    </div>
+</div>
+{% endblock %}
+
+
+
+

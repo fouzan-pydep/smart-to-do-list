@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Low Priority Tasks</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f6f8fa;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .task {
+            background-color: #fff;
+            border-left: 5px solid #f39c12;
+            padding: 15px;
+            margin-bottom: 10px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .task-title {
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .due-date {
+            color: #777;
+            font-size: 14px;
+        }
+        .actions a, .actions form {
+            display: inline-block;
+            margin-right: 10px;
+        }
+        .form-section {
+            background: #fff;
+            padding: 20px;
+            margin-top: 30px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+        }
+        input, textarea, select {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            margin-bottom: 20px;
+        }
+        button {
+            padding: 8px 16px;
+            background-color: #f39c12;
+            border: none;
+            color: #fff;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #e67e22;
+        }
+    </style>
+</head>
+<body>
+ 
+    <div class="container">
+        <h1>Low Priority Tasks</h1>
+
+        {% if tasks %}
+            {% for task in tasks %}
+                <div class="task">
+                    <div class="task-title">{{ task.title }}</div>
+                    <div class="due-date">Due: {{ task.due_date }}</div>
+                    {% if task.description %}
+                        <p>{{ task.description }}</p>
+                    {% endif %}
+                    <div class="actions">
+                        <a href="{% url 'edit_low_task' task.pk %}">Edit</a>
+                        <form method="post" action="{% url 'delete_low_task' task.pk %}">
+                            {% csrf_token %}
+                            <button type="submit" onclick="return confirm('Are you sure?')">Delete</button>
+                        </form>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>No low priority tasks found.</p>
+        {% endif %}
+
+        <div class="form-section">
+            <h2>Add New Task</h2>
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit">Save Task</button>
+            </form>
+        </div>
+    </div>
+    <a href="{% url 'home' %}">home</a>
+</body>
+</html>
